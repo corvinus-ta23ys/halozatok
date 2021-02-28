@@ -1,0 +1,55 @@
+﻿body {
+    background-color: #e6e6e7;
+}
+div {
+    margin: 13px;
+    padding: 15px;
+    border: 3px dashed #33a0d1;
+    border-radius: 20px;
+}
+h1, h2, h3 {
+    text-align: center;
+}
+#szoveg {
+    border: 3px dashed #373485;
+}
+#lista1{
+    border: 3px dashed #c52b30;
+}
+#lista2{
+border: 3px dashed #c52b30;
+}
+span {
+    font-weight: bold;
+    font-style: italic;
+    color: red;
+    font-size: 1.2em;
+    font-family: "Arial Black";
+}
+.autolista {
+    font-style: italic;
+    font-size: 1.1em;
+    font-family: "Arial Black";
+    list-style-type: square;
+}
+.orszaglista {
+    font-style: italic;
+    font-size: 1.1em;
+    font-family: "Arial Black";
+    list-style-type: square;
+}
+img {
+    display: block;
+    margin: auto;
+}
+a {
+    padding: 8px;
+    border-radius: 20px;
+    border-color: #373485;
+    background-color: #33a0d1;
+    color: #c52b30;
+}
+    a:hover {
+        background-color: red;
+        color: white;
+    }
