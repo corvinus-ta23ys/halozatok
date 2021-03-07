@@ -1,0 +1,96 @@
+﻿body {
+    text-align: center;
+}
+* {
+    box-sizing: border-box;
+}
+#cim {
+    background-color: #33a0d1
+    
+}
+#erd {
+    background-color: #373485
+    
+}
+#lista1 {
+    background-color: #c52b30
+}
+#termeszet {
+    background-color: #e6e6e7;
+}
+#lista2 {
+    background-color: #33a0d1;
+}
+#zene {
+    background-color: #373485
+}
+#link {
+    background-color: #c52b30;
+}
+#kedvenc {
+    background-color: #e6e6e7;
+}
+#cim,
+#erd,
+#lista1,
+#termeszet,
+#lista2,
+#zene,
+#kedvenc,
+#termeszeteslista
+#erdesauto
+#linkeszene
+#link {
+    padding: 20px;
+}
+@media screen and (min-width: 800px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        max-width: 1500px;
+        margin: auto;
+    }
+
+    #termeszeteslista {
+        display: flex;
+    }
+
+    #erdesauto {
+        display: flex;
+    }
+
+    #linkeszene {
+        display: flex;
+    }
+}
+
+
+
+
+
+.autolista {
+    font-style: italic;
+    font-size: 1.1em;
+    font-family: "Arial Black";
+    list-style-type: square;
+}
+
+.orszaglista {
+    font-style: italic;
+    font-size: 1.1em;
+    font-family: "Arial Black";
+    list-style-type: square;
+}
+
+a {
+    padding: 8px;
+    border-radius: 20px;
+    border-color: #373485;
+    background-color: #33a0d1;
+    color: #c52b30;
+}
+
+    a:hover {
+        background-color: red;
+        color: white;
+    }
