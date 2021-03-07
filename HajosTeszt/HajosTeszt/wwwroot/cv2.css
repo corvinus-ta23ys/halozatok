@@ -34,7 +34,7 @@ h1 {
 #termeszetleiras {
     text-align: right;
     align-items: center;
-    background: #373485;
+    background: #001457;
     padding: 20px;
     display: flex;
     color: #e6e6e7;
@@ -42,7 +42,7 @@ h1 {
 #zeneleiras {
     align-items: center;
     text-align: right;
-    background: #33a0d1;
+    background-color: #3363ff;
     padding: 20px;
     display: flex;
 }
