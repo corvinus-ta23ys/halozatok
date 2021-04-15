@@ -31,11 +31,10 @@ namespace HajosTeszt
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
             app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+
+
             /*app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context =>
@@ -43,6 +42,10 @@ namespace HajosTeszt
                     await context.Response.WriteAsync("Hello World!");
                 });
             });*/
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
