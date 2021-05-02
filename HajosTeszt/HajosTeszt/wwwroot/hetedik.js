@@ -1,91 +1,66 @@
-﻿
-var kérdések;
-var kérdésSorszám = 0;
+﻿var jóVálasz;
+var questionId = 4
 
-function letöltés() {
-    fetch('questions.json')
-        .then(response => response.json())
-        .then(data => letöltésBefejeződött(data));
-}
-
-function letöltésBefejeződött(d) {
-    console.log("Sikeres letöltés")
-    console.log(d)
-    kérdések = d;
-    kérdésMegjelenítés(0);
-}
-
-function Vissza() {
-    if (kérdésSorszám == 0) {
-        kérdésSorszám = kérdések.length-1;
-        kérdésMegjelenítés(kérdésSorszám);
-    }
-    else {
-        kérdésSorszám--;
-        kérdésMegjelenítés(kérdésSorszám);
-    }
-}
-function Előre() {
-    if (kérdésSorszám == kérdések.length-1) {
-        kérdésSorszám = 0;
-        kérdésMegjelenítés(kérdésSorszám);
-    }
-    else {
-        kérdésSorszám++;
-        kérdésMegjelenítés(kérdésSorszám);
-    }
-}
-
-var kérdésMegjelenítés = function (kérdésSzáma) {
-    let kérdés_szöveg = document.getElementById("kérdés_szöveg");
-    let kép = document.getElementById("kép1");
-    let válasz1 = document.getElementById("válasz1");
-    let válasz2 = document.getElementById("válasz2");
-    let válasz3 = document.getElementById("válasz3");
-
-    kérdés_szöveg.innerHTML = kérdések[kérdésSzáma].questionText
-    kép.src = "https://szoft1.comeback.hu/hajo/" + kérdések[kérdésSzáma].image
-    válasz1.innerText = kérdések[kérdésSzáma].answer1
-    válasz2.innerText = kérdések[kérdésSzáma].answer2
-    válasz3.innerText = kérdések[kérdésSzáma].answer3
-}
-window.onload = () => {
-    letöltés();
-    kérdésBetöltés();
-    document.getElementById("vissza").onclick = () => {
-        Vissza();
-    }
-    document.getElementById("előre").onclick = () => {
-        Előre();
-    }
-
-}
-/*function kérdésBetöltés(id) {
+function kérdésBetöltés(id) {
     fetch(`/questions/${id}`)
-        .then(válaszfeldolgozás)
-        .then(kérdésMegjelenítés);
+        .then(response => {
+            if (!response.ok) {
+                console.error(`Hibás válasz: ${response.status}`)
+            }
+            else {
+                kérdésMegjelenítés(response.json())
+            }
+        })
 }  
-*/
 
-
-
-function válaszfeldolgozás(válasz) {
-    if (!válasz.ok) {
-        console.error(`Hibás  válasz: ${response.status}`)
+function kérdésMegjelenítés() {
+    let kérdés = hotList[displayedQuestion].question;
+    if (!kérdés) return; //Ha undefined a kérdés objektum, nincs mit tenni
+    console.log(kérdés);
+    document.getElementById("kérdés_szöveg").innerText = kérdés.questionText
+    document.getElementById("válasz1").innerText = kérdés.answer1
+    document.getElementById("válasz2").innerText = kérdés.answer2
+    document.getElementById("válasz3").innerText = kérdés.answer3
+    jóVálasz = kérdés.correctAnswer;
+    if (kérdés.image) {
+        document.getElementById("kép").src = "https://szoft1.comeback.hu/hajo/" + kérdés.image;
+        document.getElementById("kép").classList.remove("rejtett")
     }
     else {
-        return válasz.json()
+        document.getElementById("kép").classList.add("rejtett")
     }
-}
-function válaszfeldolgozás(válasz) {
-    if (!válasz.ok) {
-        console.error(`Hibás válasz: ${response.status}`)
-    }
-    else {
-        return válasz.json()
-    }
+    //Jó és rossz kérdések jelölésének levétele
+    document.getElementById("válasz1").classList.remove("jó", "rossz");
+    document.getElementById("válasz2").classList.remove("jó", "rossz");
+    document.getElementById("válasz3").classList.remove("jó", "rossz");
 }
 
+function előre() {
+    questionId++;
+    kérdésBetöltés(questionId)
+}
+
+function vissza() {
+    questionId--;
+    kérdésBetöltés(questionId)
+}
+
+window.onload = function (e) {
+    console.log("Oldal betöltve...");
+    document.getElementById("előre_gomb").onclick = előre;
+    document.getElementById("vissza_gomb").onclick = vissza;
+    kérdésBetöltés(questionId)
+}
+
+function választás(n) {
+    if (n != jóVálasz) {
+        document.getElementById(`válasz${n}`).classList.add("rossz");
+        document.getElementById(`válasz${jóVálasz}`).classList.add("jó");
+    }
+    else {
+        document.getElementById(`válasz${jóVálasz}`).classList.add("jó");
+    }
+}
 var hotList = [];           //Az éppen gyakoroltatott kérdések listája 
 var questionsInHotList = 3; //Ez majd 7 lesz, teszteléshez jobb a 3. 
 var displayedQuestion;      //A hotList-ből éppen ez a kérdés van kint
@@ -93,27 +68,12 @@ var numberOfQuestions;      //Kérdések száma a teljes adatbázisban
 var nextQuestion = 1;       //A következő kérdés száma a teljes listában
 
 var hotList = [];
-var questionsInHotList = 3; //Ez majd 7 lesz, teszteléshez jobb a 3. 
+var questionsInHotList = 3; //Ez majd 7 lesz, teszteléshez jobb a 3.
 
 var displayedQuestion;      //A hotList-ből éppen ez a kérdés van kint
 var numberOfQuestions;      //Kérdések száma a teljes adatbázisban
 var nextQuestion = 1;      //A következő kérdés száma a teljes listában
 
-function init() {
-    for (var i = 0; i < questionsInHotList; i++) {
-        let q = {
-            question: {},
-            goodAnswers: 0
-        }
-        hotList[i] = q;
-    }
-
-    //Első kérdések letöltése
-    for (var i = 0; i < questionsInHotList; i++) {
-        kérdésBetöltés(nextQuestion, i);
-        nextQuestion++;
-    }
-}
 
 function kérdésBetöltés(questionNumber, destination) {
     fetch(`/questions/${questionNumber}`)
@@ -132,6 +92,49 @@ function kérdésBetöltés(questionNumber, destination) {
                 hotList[destination].question = q;
                 hotList[destination].goodAnswers = 0;
                 console.log(`A ${questionNumber}. kérdés letöltve a hot list ${destination}. helyére`)
+                if (displayedQuestion == undefined && destination == 0) {
+                    displayedQuestion = 0;
+                    kérdésMegjelenítés();
+                }
             }
         );
 }
+const helyimentes = window.localStorage;
+
+function init() {
+    for (var i = 0; i < questionsInHotList; i++) {
+        let q = {
+            question: {},
+            goodAnswers: 0
+        }
+        hotList[i] = q;
+        helyimentes = localStorage.setItem('mentes');
+        
+    }
+
+    //Első kérdések letöltése
+    for (var i = 0; i < questionsInHotList; i++) {
+        kérdésBetöltés(nextQuestion, i);
+        nextQuestion++;
+    }
+    helyimentes = localStorage.getItem('mentes');
+}
+
+function előre() {
+    displayedQuestion++;
+    if (displayedQuestion == questionsInHotList) displayedQuestion = 0;
+    kérdésMegjelenítés()
+}
+
+//Nem tudom működésre bírni sehogy sem az oldalt, így a goodanwers változós részt nem tudom megcsinálni
+
+var timeoutHandler;
+timeoutHandler = setTimeout(előre, 3000);
+
+function előre() {
+    clearTimeout(timeoutHandler)
+    displayedQuestion++;
+    if (displayedQuestion == questionsInHotList) displayedQuestion = 0;
+    kérdésMegjelenítés()
+}
+
