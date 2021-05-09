@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-16" />
     <title></title>
-    <script src="hetedik.js"></script>
+    <script src="tizedik.js"></script>
 </head>
 <body>
     <div id="külső">
@@ -13,9 +13,9 @@
 
         <div id="középső">
             <div id="válaszok">
-                <div id="válasz1" class="kerdes kattintható">Válasz 1</div>
-                <div id="válasz2" class="kerdes kattintható jó">Válasz 2</div>
-                <div id="válasz3" class="kerdes kattintható rossz">Válasz 3</div>
+                <div id="válasz1" onclick="választás(1)" class="kerdes kattintható">Válasz 1</div>
+                <div id="válasz2" onclick="választás(2)" class="kerdes kattintható">Válasz 2</div>
+                <div id="válasz3" onclick="választás(3)" class="kerdes kattintható">Válasz 3</div>
             </div>
             <div id="kép">
                 <img id="kép" src="https://szoft1.comeback.hu/hajo/teszt-0050.jpg" alt=""/>
@@ -68,7 +68,14 @@
             flex-shrink:0;
             flex-shrink: 0;
         }
-
+        .jó{
+            background-color: forestgreen;
+            color: white;
+        }
+        .rossz{
+            background-color: red;
+            color:white;
+        }
         .gomb {
             padding: 20px;
             width: 80px;
