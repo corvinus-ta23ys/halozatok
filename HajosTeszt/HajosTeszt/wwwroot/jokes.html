@@ -7,10 +7,10 @@
 <body>
     <form>
         <div id="jokeList"></div>
+        <button id="addButton">Új vicc felvétele</button>
         <div id="viccek">
             <input id="jokeText" type="text" placeholder="Csak PC vicc" />
         </div>
-        <button id="addButton">Új vicc felvétele</button>
     </form>
     <script>
         document.getElementById("addButton").addEventListener("click", () => {
@@ -21,7 +21,7 @@
             }
 
 
-            fetch("api/jokes",
+            fetch('api/jokes',
                 {
                     method: 'POST',
                     headers: {
@@ -36,22 +36,28 @@
                     else {
                         alert("Kudarc");
                     }
-                });
+                })
+        });
 
-            fetch("api/jokes")
+        window.onload = function () {
+            fetch('api/jokes')
                 .then(response => response.json())
-                .then(data => kiiratás(data)
+                .then(data => kiiras(data)
 
                 );
 
-            function kiiratás(lista) {
-                console.log(lista)
-                for (var i = 0; i < lista.length; i++) {
-                    let újElem = document.createElement("div");
-                    újElem.innerText = lista[i];
-                    document.getElementById("viccek").appendChild(újElem);
+            function kiiras(viccek) {
+                console.log(viccek)
+                
+                for (var i = 0; i < viccek.length; i++) {
+                    let újVicc = document.createElement("div");
+                    újVicc.innerText = viccek[i];
+                    document.getElementById("viccek").appendChild(újVicc);
                 }
             }
+        }
+
+            
     </script>
 </body>
 </html>
